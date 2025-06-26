@@ -1,0 +1,122 @@
+{% load static %}
+{% csrf_token %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Processor</title>
+</head> 
+<style>
+body {
+  font-family: 'Courier New', Courier, monospace;
+}
+</style>
+<body>
+<h2 style="padding: 5px; color: white; background-color: rgb(30, 146, 30); width: fit-content; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px; ">Bubstal Limited Internship Demo</h2>
+<div>
+  <span style="margin: 5px; font-size: 20px; margin-top: auto; margin-bottom: auto;">Powered by Microsoft Copilot</span> <img src="https://images.seeklogo.com/logo-png/50/1/microsoft-365-copilot-logo-png_seeklogo-501781.png" style="width: 40px; height: 40px"> 
+</div>
+{% if try_again %} 
+  <span style="margin: 5px;">Sorry for the inconvience, please try again or try other simpler emails.</span>
+{% endif %} 
+<br><br>
+<form method="post" enctype="multipart/form-data" style="margin: 5px;">
+  {% csrf_token %} 
+  <input id="file" type="file" name="myfile" type="button">
+  <input type="submit" value="Upload" onclick="loading()">
+</form>
+{% if csv %}
+<span id="csv_contents" style="display:none">{{csv}}</span> 
+<button id="downloadCSV" style="color:aliceblue; background-color: darkgreen; font-size: large;">Download CSV</button>   
+<form method="post" enctype="multipart/form-data" style="margin: 5px;">
+  {% csrf_token %} 
+  <input name="email_name" type="hidden" value="{{email_name}}">
+  <input name="csv_actual" type="hidden" value="{{csv_string}}">
+  <input type="submit" value="Save CSV" name="save_CSV" style="color:aliceblue; background-color: rgb(128, 40, 34); font-size: large;">
+</form>
+{% endif %}
+{% if list_of_saved_emails %}
+  <span style="margin-left: 7px; font-weight: bold;">List of Saved CSVs:</span>
+  <div style="display: flex; width: 30px; margin: 5px; margin-right: 7px;">
+  {% for le in list_of_saved_emails %}
+  <button data-id='{{le.kanban.csv}}' id={{le.email_name}} style="margin-left: 10px; background-color: rgb(118, 254, 118)" onclick="download('{{le.email_name}}')">{{le.email_name}}.csv</button>
+  <form method="post" enctype="multipart/form-data" style="margin: 5px; margin-right: 7px;">
+    {% csrf_token %} 
+    <input name="id" type="hidden" value="{{le.id}}">
+    <input type="submit" value="🗑️" name="delete_email" style="border-radius: 98%; color:aliceblue; background-color: rgb(158, 27, 18); font-size: large;">
+  </form>
+  {% endfor %} 
+  </div>
+{% endif %}
+<h3 id="loading" style="display: none; margin: 5px;">Loading... please do not touch your computer </h3> 
+<div style="overflow-y: scroll;"> 
+  {% if values %}
+  <div style="display: flex; height: fit-content;"> 
+      <div style="background-color: rgb(37, 143, 122); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">Classify Intent</h3></div>
+      <div style="background-color: rgb(200, 118, 51); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">Possible Actions</h3></div>
+      <div style="background-color: rgb(145, 51, 200); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">How to Reply</h3></div>
+      <div style="background-color: rgb(135, 153, 35); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">Sender Email</h3></div>
+      <div style="background-color: rgb(16, 88, 132); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">Receiver Email</h3></div>
+      <div style="background-color: rgb(134, 23, 66); min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px;"><h3 style="color: white;">Sender Name</h3></div>
+  </div>   
+  {% for ele_l in values %} 
+  <div style="display: flex; height: fit-content;"> 
+    {% for item in ele_l %} 
+      <h3 style="min-width: 350px; border-radius: 5px;  margin: 5px; text-align: center; padding: 3px; border: solid 1px black; box-shadow: 3px 3px 5px 6px #ccc;">{{item}}</h3> 
+    {% endfor %} 
+  </div> 
+  {% endfor %}
+</div>
+{% endif %}  
+<script>
+function download(email_name)  {
+  console.log(email_name + " downloading...")
+  const csvContent = document.getElementById(email_name).getAttribute("data-id"); // Added a newline for proper CSV formatting, though not strictly necessary for this simple example
+
+  console.log(csvContent)
+  // Create a Blob from the CSV content with the correct MIME type 
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+    // Create a link element
+    const link = document.createElement('a');
+    link.download = email_name + '.csv';
+    link.href = URL.createObjectURL(blob);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+}
+function loading() {
+    document.getElementById("loading").style.display = "block" 
+} 
+document.getElementById('downloadCSV').addEventListener('click', function(){
+    const csvContent = document.getElementById("csv_contents").innerHTML; // Added a newline for proper CSV formatting, though not strictly necessary for this simple example
+
+    // Create a Blob from the CSV content with the correct MIME type 
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+    // Create a link element
+    const link = document.createElement('a');
+
+    // Set the download attribute with the desired file name
+    link.download = 'email_data.csv';
+
+    // Create a URL for the Blob and set it as the link's href
+    link.href = URL.createObjectURL(blob);
+
+    // Append the link to the body (it doesn't need to be visible)
+    document.body.appendChild(link);
+
+    // Programmatically click the link to trigger the download
+    link.click();
+
+    // Clean up: remove the link and revoke the object URL after a short delay
+    // This is important to free up memory
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+
+    console.log("CSV download initiated.");
+  })
+</script>
+</body>
+</html>
