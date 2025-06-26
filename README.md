@@ -2,9 +2,9 @@ Bubstal Internship Demo (by Wai Lun Mak)
 
 Video Demo:
 
-[![Video Demo](https://cdn-icons-png.flaticon.com/256/1384/1384060.png)](https://youtu.be/vt5fpE0bzSY)
+[![Video Demo](https://cdn-icons-png.flaticon.com/256/1384/1384060.png)](https://youtu.be/JVElO35-eIY)
 
-[![Video Demo](./Youtube_Video.png)](https://youtu.be/vt5fpE0bzSY)
+[![Video Demo](./Youtube_Video.png)](https://youtu.be/JVElO35-eIY)
 
 How to Run:
 1. Please cd into "bubstal" folder.
