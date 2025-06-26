@@ -27,7 +27,7 @@
 **f.** The user has the option to store the generated CSV in a SQL database. <br />
 **g.** The user can delete the stored CSV files anytime. <br />
 
-** (Note: Please do not touch your computer when Django is processing the .eml file.) **
+**(Note: Please do not touch your computer when Django is processing the .eml file.)**
 
 
 ### Happy Points:
