@@ -19,13 +19,13 @@
 
 
 ### Process: 
-a. Django handles the incoming .eml file uploaded by the user. <br />
-b. Django uses Selenium to open a new page linked to Copilot in the background. <br />
-c. Selenium asks Copilot the necessary questions. <br />
-d. Copilot generates a CSV file and Selenium webscrapes it. <br />
-e. When finished, the generated CSV file is displayed as a Kanban view. <br />
-f. The user has the option to store the generated CSV in a SQL database. <br />
-g. The user can delete the stored CSV files anytime. <br />
+**a.** Django handles the incoming .eml file uploaded by the user. <br />
+**b.** Django uses Selenium to open a new page linked to Copilot in the background. <br />
+**c.** Selenium asks Copilot the necessary questions. <br />
+**d.** Copilot generates a CSV file and Selenium webscrapes it. <br />
+**e.** When finished, the generated CSV file is displayed as a Kanban view. <br />
+**f.** The user has the option to store the generated CSV in a SQL database. <br />
+**g.** The user can delete the stored CSV files anytime. <br />
 
 ** (Note: Please do not touch your computer when Django is processing the .eml file.) **
 
