@@ -41,7 +41,7 @@ g. The user can delete the stored CSV files anytime.
 3. The user CANNOT touch their computer while the .eml file is being processed. 
 
 
-Thoughts:
+### Thoughts:
 1. I had very limited time today due to unforeseen reasons but I'm glad that I managed to complete the web application in more than 5 hours. 
 2. I choose Selenium to webscrape and ask the chatbot questions because it is one of the most efficient plugins that help with automatic browser navigation. 
 3. I choose Copilot because it is available in Hong Kong. I planned to use Gemini at first, but sadly it is not available in the city. 
