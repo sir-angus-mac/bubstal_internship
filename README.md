@@ -31,9 +31,8 @@
 
 
 ### Happy Points:
-1. The "Download Now" button loads the immediately generated CSV file perfectly. 
-2. The "Save CSV" button works. The user can revisit and download the saved CSV files anytime.
-
+✅ The "Download Now" button loads the immediately generated CSV file perfectly. <br />
+✅ The "Save CSV" button works. The user can revisit and download the saved CSV files anytime. <br />
 
 ### Improvements:
 1. The UX/UI can be improved. 
